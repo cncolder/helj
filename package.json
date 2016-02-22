@@ -140,15 +140,15 @@
     "staging": {
       "host": "139.129.27.109",
       "path": "/var/www/helj",
-      "post-deploy": "npm install --production --unsafe-perm --no-bin-links ; pm2 startOrRestart package.json --env staging ; npm prune",
+      "post-deploy": "cnpm install --production --unsafe-perm --no-bin-links ; pm2 startOrRestart package.json --env staging ; cnpm prune",
       "ref": "origin/dev",
       "repo": "/var/git/helj",
       "user": "root"
     },
     "production": {
-      "host": "helj",
+      "host": "helj.co",
       "path": "/var/www/helj",
-      "post-deploy": "npm install --production --unsafe-perm --no-bin-links ; pm2 startOrRestart package.json --env production ; npm prune",
+      "post-deploy": "cnpm install --production --unsafe-perm --no-bin-links ; pm2 startOrRestart package.json --env production ; cnpm prune",
       "ref": "origin/master",
       "repo": "/var/git/helj",
       "user": "root"
