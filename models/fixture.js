@@ -4,6 +4,7 @@
  * initialize database.
  */
 
+import env from '../lib/env'
 import User from './user'
 const log = require('debug')('app:models:fixture')
 
@@ -16,8 +17,16 @@ const fixture = {
     Promise.all(promises).catch(() => {})
   },
 
+  local() {},
+
   development() {
     this.common()
+    this.local()
+  },
+
+  staging() {
+    this.common()
+    this.local()
   },
 
   production() {
@@ -27,7 +36,7 @@ const fixture = {
 
 export default () => {
   try {
-    fixture[process.env.NODE_ENV || 'development']()
+    fixture[env.env]()
   } catch (err) {
     log(err)
   }
