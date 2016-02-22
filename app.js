@@ -5,7 +5,7 @@
 import models from './models'
 import fixture from './models/fixture'
 import './lib/error'
-import Cookies from 'cookies'
+// import Cookies from 'cookies'
 import convert from 'koa-convert'
 import Koa from 'koa'
 import IO from 'koa-socket'
