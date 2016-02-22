@@ -112,7 +112,7 @@
     "env_staging": {
       "DEBUG": "app:*",
       "HOST": "127.0.0.1",
-      "MONGO_URL": "mongodb://127.0.0.1:27017/heljdev?auto_reconnect=true",
+      "MONGO_URL": "mongodb://127.0.0.1:27017/heljstage?auto_reconnect=true",
       "NODE_ENV": "staging",
       "PORT": 3333
     },
@@ -140,7 +140,7 @@
   "deploy": {
     "staging": {
       "host": "139.129.27.109",
-      "path": "/var/www/helj",
+      "path": "/var/www/heljstage",
       "post-deploy": "cnpm install --production --unsafe-perm --no-bin-links ; pm2 startOrRestart package.json --env staging ; cnpm prune",
       "ref": "origin/dev",
       "repo": "/var/git/helj",
