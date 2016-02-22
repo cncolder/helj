@@ -21,12 +21,12 @@ const router = new Router()
   .get('/', async ctx => {
     // Use this for send a init session to client. Socket.io use koa session id as identity. It allow passport auth in the future.
     ctx.session.io = ''
-      // ctx.render('index', {
-      //   env: {
-      //     NODE_ENV: process.env.NODE_ENV,
-      //   },
-      // })
-      // ctx.status = 200
+    ctx.render('index', {
+      env: {
+        NODE_ENV: process.env.NODE_ENV,
+      },
+    })
+    ctx.status = 200
   })
   .get('/test', ctx => {
     ctx.body = 'test!'

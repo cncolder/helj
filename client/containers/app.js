@@ -18,15 +18,8 @@ import {
 from 'reselect'
 import EaseIn from '../components/ease-in'
 import {
-  Button,
-  ButtonArea,
-  Cells,
-  CellsTitle,
-  CellsTips,
-  Cell,
-  CellHeader,
-  CellBody,
-  CellFooter,
+  Button, ButtonArea,
+  Cells, CellsTitle, CellsTips, Cell, CellHeader, CellBody, CellFooter,
   Icon,
   Toast,
 }

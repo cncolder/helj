@@ -20,7 +20,7 @@ import {
 }
 from 'react-redux'
 import {
-  Router, Route, IndexRoute
+  Router, Route, IndexRoute,
 }
 from 'react-router'
 import {

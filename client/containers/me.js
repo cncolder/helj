@@ -8,15 +8,8 @@ import {
 from 'react-redux'
 import EaseIn from '../components/ease-in'
 import {
-  Button,
-  ButtonArea,
-  Cells,
-  CellsTitle,
-  CellsTips,
-  Cell,
-  CellHeader,
-  CellBody,
-  CellFooter,
+  Button, ButtonArea,
+  Cells, CellsTitle, CellsTips, Cell, CellHeader, CellBody, CellFooter,
 }
 from 'react-weui'
 const log = require('debug')('client:containers:me')
@@ -95,4 +88,4 @@ class Me extends Component {
 
 const select = state => state.me
 
-export default connect(select, actions)(Me)
+export default connect(select)(Me)

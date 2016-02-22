@@ -13,15 +13,8 @@ from 'reselect'
 import * as loginActions from '../actions/login'
 import EaseIn from '../components/ease-in'
 import {
-  Button,
-  ButtonArea,
-  Cells,
-  CellsTitle,
-  CellsTips,
-  Cell,
-  CellHeader,
-  CellBody,
-  CellFooter,
+  Button, ButtonArea,
+  Cells, CellsTitle, CellsTips, Cell, CellHeader, CellBody, CellFooter,
 }
 from 'react-weui'
 const log = require('debug')('app:containers:login')
