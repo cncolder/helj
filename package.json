@@ -100,6 +100,20 @@
     "stop": "pm2 kill",
     "test": "mocha"
   },
+  "babel": {
+    "ignore": [
+      "**/node_modules/**"
+    ],
+    "plugins": [
+      "transform-runtime",
+      "external-helpers"
+    ],
+    "presets": [
+      "es2015",
+      "react",
+      "stage-0"
+    ]
+  },
   "apps": [{
     "env": {
       "DEBUG": "app:*,koa:*,socket.io:*,-socket.io:client,-follow-redirects",
@@ -112,7 +126,7 @@
     "env_staging": {
       "DEBUG": "app:*",
       "HOST": "0.0.0.0",
-      "MONGO_URL": "mongodb://127.0.0.1:27017/heljstage?auto_reconnect=true",
+      "MONGO_URL": "mongodb://127.0.0.1:27017/helj?auto_reconnect=true",
       "NODE_ENV": "staging",
       "PORT": 3333
     },
@@ -140,7 +154,7 @@
   "deploy": {
     "staging": {
       "host": "139.129.27.109",
-      "path": "/var/www/heljstage",
+      "path": "/var/www/helj",
       "post-deploy": "cnpm install --production --unsafe-perm --no-bin-links ; pm2 startOrRestart package.json --env staging ; cnpm prune",
       "ref": "origin/dev",
       "repo": "/var/git/helj",
