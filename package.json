@@ -111,7 +111,7 @@
     },
     "env_staging": {
       "DEBUG": "app:*",
-      "HOST": "127.0.0.1",
+      "HOST": "0.0.0.0",
       "MONGO_URL": "mongodb://127.0.0.1:27017/heljstage?auto_reconnect=true",
       "NODE_ENV": "staging",
       "PORT": 3333
