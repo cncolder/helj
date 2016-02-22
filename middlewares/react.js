@@ -1,0 +1,60 @@
+import path from 'path'
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+import beautify from 'js-beautify'
+import options from './options'
+const log = require('debug')('app:middlewares:react')
+
+const opts = options.react
+const viewsPath = path.join(process.cwd(), opts.path)
+
+export default async(ctx, next) => {
+  ctx.render = (filename, locals = {}) => {
+    let filepath = path.join(viewsPath, filename)
+
+    if (!~filepath.indexOf(viewsPath)) {
+      let err = new Error('Cannot find view file ' + filename)
+      err.code = 'REACT'
+      throw err
+    }
+
+    filepath += path.extname(filepath) ? '' : opts.extname
+      // Object.assign(locals, this.app.state || {})
+
+    var markup = opts.doctype || ''
+    try {
+      let component = require(filepath)
+        // Transpiled ES6 may export components as { default: Component }
+      component = component.default || component
+      markup += ReactDOMServer.renderToStaticMarkup(
+        React.createElement(component, Object.assign(locals, ctx.state))
+      )
+
+      if (opts.beautify) {
+        // NOTE: This will screw up some things where whitespace is important, and be subtly different than prod.
+        markup = beautify.html(markup)
+      }
+
+      ctx.type = 'html'
+      ctx.body = markup
+    } catch (err) {
+      err.code = 'REACT'
+      throw err
+    } finally {
+      if (opts.cache) {
+        return
+      }
+      Object.keys(require.cache).forEach(module => {
+        let filename = require.cache[module].filename
+        if (
+          filename.startsWith(viewsPath) &&
+          path.extname(filename) == opts.extname
+        ) {
+          delete require.cache[module]
+        }
+      })
+    }
+  }
+
+  return next()
+}

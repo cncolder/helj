@@ -1,0 +1,35 @@
+import React from 'react'
+import EaseIn from '../components/ease-in'
+import {
+  Article,
+}
+from 'react-weui'
+const log = require('debug')('app:containers:no-match')
+
+class NoMatch extends React.Component {
+  render() {
+    return (
+      <EaseIn>
+        <Article>
+          <h1>找不到页面</h1>
+          <section>
+            <h2>
+              您所访问的页面不存在, 可能的原因:
+            </h2>
+            <section>
+              <ol style={{marginLeft: 20}}>
+                <li>当前页面还未完成制作.</li>
+                <li>
+                  页面已被删除, 请更新您的收藏夹.
+                </li>
+                <li>请不要尝试手动改变页面访问地址.</li>
+              </ol>
+            </section>
+          </section>
+        </Article>
+      </EaseIn>
+    )
+  }
+}
+
+export default NoMatch

@@ -1,0 +1,5 @@
+--reporter spec
+--recursive
+--bail
+--compilers js:babel-register
+--require ./test/helper.js

@@ -1,0 +1,75 @@
+import passport from 'koa-passport'
+import compose from 'koa-compose'
+import User from '../models/user'
+const log = require('debug')('app:middlewares:passport')
+
+passport.use(User.createStrategy())
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+const initialize = passport.initialize()
+const session = passport.session()
+
+const client = async(ctx, next) => {
+  // Mark socket with user
+  ctx.sock.socket.user = ctx.req.user
+
+  if (!ctx.client) ctx.client = id => {
+    // All sockets in connected hash
+    let connected = ctx.io.socket.sockets.connected || {}
+    let socket = Object.keys(connected).map(key => connected[key]).find(socket => {
+      // Find socket by id or username
+      return socket.user && (socket.user.id == id || socket.user.username == id) && socket
+    }) || {
+      // Dummy socket for offline user
+      emit: () => {}
+    }
+  }
+
+  return next()
+}
+
+const login = async(ctx, next) => {
+  if (ctx.url == '/auth/login') {
+    return passport.authenticate('local', function(user, info, status) {
+      if (user) {
+        ctx.user = user
+        ctx.session = ctx.session || {}
+        ctx.session.passport = {
+          user: user.username,
+        }
+
+        ctx.body = user
+        ctx.status = 200
+      } else {
+        ctx.body = info
+        ctx.status = 401
+      }
+    })(ctx, next)
+  } else {
+    return next()
+  }
+}
+
+const logout = async(ctx, next) => {
+  if (ctx.url == '/auth/logout') {
+    ctx.logout()
+    delete ctx.session.passport
+    ctx.status = 204
+  } else {
+    return next()
+  }
+}
+
+export const io = compose([
+  initialize,
+  session,
+  client,
+  login,
+  logout,
+])
+
+export default compose([
+  initialize,
+  session,
+])
