@@ -11,7 +11,7 @@ export default class extends React.Component {
         <meta name="keywords" content=""/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-        <title>Erwin</title>
+        <title>和隆记</title>
 
         {/* Set render engine for 360 browser */}
         <meta name="renderer" content="webkit"/>
