@@ -55,22 +55,27 @@ class Login extends Component {
   };
 
   get userInputValid() {
-    return this.props.username.length >= 3 &&
-      this.props.password.length >= 3
+    const {
+      username, password
+    } = this.props
+    return username && username.length >= 3 &&
+      password && password.length >= 3
   }
 
   render() {
-    const usernameError = ~[
+    const usernameError = this.props.error && ~[
         'MissingUsernameError',
         'IncorrectUsernameError',
-      ].indexOf(this.props.error.name) ?
-      'weui_cell_warn' : ''
+      ].indexOf(this.props.error.name) &&
+      'weui_cell_warn' ||
+      ''
 
-    const passwordError = ~[
+    const passwordError = this.props.error && ~[
         'MissingPasswordError',
         'IncorrectPasswordError',
-      ].indexOf(this.props.error.name) ?
-      'weui_cell_warn' : ''
+      ].indexOf(this.props.error.name) &&
+      'weui_cell_warn' ||
+      ''
 
     return (
       <EaseIn>
@@ -123,10 +128,14 @@ class Login extends Component {
   }
 }
 
-export const selector = createSelector(
+const selector = createSelector(
   state => state.login,
 
-  login => login,
+  (
+    login = {},
+  ) => ({
+    ...login
+  }),
 )
 
 export default connect(selector, {

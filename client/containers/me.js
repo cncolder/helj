@@ -6,6 +6,10 @@ import {
   connect,
 }
 from 'react-redux'
+import {
+  createSelector
+}
+from 'reselect'
 import EaseIn from '../components/ease-in'
 import {
   Button, ButtonArea,
@@ -16,7 +20,7 @@ const log = require('debug')('client:containers:me')
 
 class Me extends Component {
   static propTypes = {
-    user: PropTypes.object,
+    me: PropTypes.object,
   };
 
   constructor(props) {
@@ -35,19 +39,19 @@ class Me extends Component {
           <Cell>
             <CellBody>用户名</CellBody>
             <CellFooter>
-              {this.props.user.username}
+              {this.props.me.mename}
             </CellFooter>
           </Cell>
           <Cell>
             <CellBody>等级</CellBody>
             <CellFooter>
-              {this.props.user.level}
+              {this.props.me.level}
             </CellFooter>
           </Cell>
           <Cell>
             <CellBody>余额</CellBody>
             <CellFooter>
-              {this.props.user.balance}
+              {this.props.me.balance}
             </CellFooter>
           </Cell>
         </Cells>
@@ -57,7 +61,7 @@ class Me extends Component {
           <Cell>
             <CellBody>邮箱</CellBody>
             <CellFooter>
-              {this.props.user.email}
+              {this.props.me.email}
             </CellFooter>
           </Cell>
         </Cells>
@@ -67,13 +71,13 @@ class Me extends Component {
           <Cell>
             <CellBody>开户行</CellBody>
             <CellFooter>
-              {this.props.user.bankName}
+              {this.props.me.bankName}
             </CellFooter>
           </Cell>
           <Cell>
             <CellBody>卡号</CellBody>
             <CellFooter>
-              {this.props.user.bankNumber}
+              {this.props.me.bankNumber}
             </CellFooter>
           </Cell>
         </Cells>
@@ -86,6 +90,15 @@ class Me extends Component {
   }
 };
 
-const select = state => state.me
+const selector = createSelector(
+  state => state.me,
 
-export default connect(select)(Me)
+  (
+    me = {},
+  ) => ({
+    me,
+  })
+)
+
+
+export default connect(selector)(Me)

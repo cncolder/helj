@@ -12,22 +12,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import reactTapEventPlugin from 'react-tap-event-plugin'
 import {
-  createStore, combineReducers
-}
-from 'redux'
-import {
   Provider
 }
 from 'react-redux'
 import {
-  Router, Route, IndexRoute,
+  Router, Route, IndexRoute, browserHistory
 }
 from 'react-router'
 import {
-  syncReduxAndRouter
+  syncHistoryWithStore
 }
-from 'redux-simple-router'
-import history from './lib/history'
+from 'react-router-redux'
 import store from './store'
 import subscribeSocketIO from './store/subscribe-socket.io'
 import App from './containers/app'
@@ -42,7 +37,8 @@ const log = require('debug')('client:index')
 
 reactTapEventPlugin()
 
-syncReduxAndRouter(history, store)
+// Create an enhanced history that syncs navigation events with the store
+const history = syncHistoryWithStore(browserHistory, store)
 
 subscribeSocketIO(store)
 

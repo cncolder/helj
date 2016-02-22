@@ -60,11 +60,13 @@ export class App extends Component {
 const empty = Array(10).fill(0)
 
 export const selector = createSelector(
-  state => state.me.user,
+  state => state.me,
 
-  (me) => ({
+  (
+    me = {},
+  ) => ({
     me,
   })
 )
 
-export default connect(selector, {})(App)
+export default connect(selector)(App)

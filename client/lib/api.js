@@ -1,13 +1,4 @@
-/**
- * Web api
- */
-
 import socket from './socket'
-
-/**
- * Logger
- */
-
 const log = require('debug')('client:lib:api')
 
 /**

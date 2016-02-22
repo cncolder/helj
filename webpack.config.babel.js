@@ -2,8 +2,8 @@ import path from 'path'
 import autoprefixer from 'autoprefixer'
 import webpack from 'webpack'
 
-const join = p => path.join(__dirname, p)
 
+const join = p => path.join(__dirname, p)
 const PROD = 'production' == process.env.NODE_ENV
 
 export default {
@@ -30,12 +30,12 @@ export default {
       'react',
       'react-dom',
       'react-redux',
+      'react-router',
+      'react-router-redux',
       'react-tap-event-plugin',
       'redux',
       'redux-actions',
       'redux-promise',
-      'react-router',
-      'redux-simple-router',
       'reselect',
       'socket.io-client/socket.io',
     ],
@@ -92,13 +92,6 @@ export default {
         warnings: false,
       },
     }),
-    // new CompressionPlugin({
-    //   asset: '{file}.gz',
-    //   algorithm: 'gzip',
-    //   regExp: /\.js/,
-    //   threshold: 10240,
-    //   minRatio: 0.8
-    // })
   ] : [
     new webpack.DefinePlugin({
       'process.env': {

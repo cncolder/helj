@@ -1,7 +1,3 @@
-/**
- * Login form reducer
- */
-
 import {
   handleActions,
 }
@@ -33,4 +29,6 @@ export default handleActions({
       error: action.payload.data || action.payload,
     }),
   },
-}, {})
+}, {
+  error: {},
+})

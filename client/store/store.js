@@ -2,12 +2,19 @@
  * Store singleton
  */
 
-import {createStore, applyMiddleware, combineReducers} from 'redux'
+import {
+  createStore, applyMiddleware, combineReducers
+}
+from 'redux'
 import promiseMiddleware from 'redux-promise'
+import {
+  routerReducer
+}
+from 'react-router-redux'
 import reducers from '../reducers'
 import initialState from './initial-state'
-import subscribeSocketIO from './subscribe-socket.io'
 const log = require('debug')('client:store')
+
 
 let createStoreWithMiddleware
 
@@ -29,8 +36,10 @@ if ('production' == process.env.NODE_ENV) {
   }
 }
 
-const store = createStoreWithMiddleware(reducers, initialState)
+const store = createStoreWithMiddleware(combineReducers({
+  ...reducers,
+  routing: routerReducer,
+}))
 
-subscribeSocketIO(store)
 
 export default store

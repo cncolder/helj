@@ -17,6 +17,7 @@ import LoadingIndicator from '../components/loading-indicator'
 import Login from './login'
 const log = require('debug')('client:containers:layout')
 
+
 class Layout extends Component {
   static propTypes = {
     role: PropTypes.string,
@@ -83,10 +84,12 @@ class Layout extends Component {
 }
 
 export const selector = createSelector(
-  state => state.me.user,
+  state => state.me,
 
-  user => ({
-    role: user.role
+  (
+    me = {},
+  ) => ({
+    role: me.role
   })
 )
 

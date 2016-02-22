@@ -6,7 +6,7 @@ export default class extends React.Component {
   render() {
     return (
       <Layout>
-        <app/>
+        <div id="client"></div>
         <script src="/js/vendor.js"></script>
         <script src="/js/bundle.js"></script>
       </Layout>
