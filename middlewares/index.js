@@ -1,17 +1,24 @@
+import env from '../lib/env'
 import compress from './compress'
 import conditionalGet from './conditional-get'
 import convert from 'koa-convert'
 import etag from './etag'
 import logger from './logger'
-import passport, {
-  io as passportIO,
-}
-from './passport'
+  // import passport, {
+  //   io as passportIO,
+  // }
+  // from './passport'
 import react from './react'
 import responseTime from './response-time'
 import serveStatic from './serve-static'
 import session from './session'
-const log = require('debug')('app:middlewares')
+import wechat from './wechat'
+import wechatDetector from './wechat-detector'
+import routes, {
+  io as routesIO
+}
+from '../routes'
+const log = require('../lib/debug')('app:middlewares')
 
 let middlewaresForApp = [
   responseTime,
@@ -21,11 +28,14 @@ let middlewaresForApp = [
   etag,
   serveStatic,
   session,
-  passport,
+  // passport,
   react,
+  wechatDetector,
+  routes,
+  wechat,
 ]
 
-if ('development' == process.env.NODE_ENV) {
+if (env.local) {
   middlewaresForApp = [
     require('./webpack-dev').default,
     require('./webpack-hot').default,
@@ -34,7 +44,7 @@ if ('development' == process.env.NODE_ENV) {
 
 let middlewaresForIO = [
   session,
-  passportIO,
+  // passportIO,
 ]
 
 export const io = convert.compose(middlewaresForIO)

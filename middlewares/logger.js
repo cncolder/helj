@@ -1,6 +1,8 @@
 import logger from 'koa-logger'
-import options from './options'
+import config from '../config'
 
-const opts = options.logger
+
+const opts = config.logger
+
 
 export default logger(opts)

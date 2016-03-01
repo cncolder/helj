@@ -6,7 +6,7 @@ from 'react'
 import {
   pushPath,
 }
-from 'redux-simple-router'
+from 'react-router-redux'
 const log = require('debug')('client:components:nav-menu');
 
 export default class NavMenu extends Component {

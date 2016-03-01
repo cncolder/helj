@@ -1,5 +1,7 @@
 import ms from 'ms'
 import MongoStore from 'koa-generic-session-mongo'
+import env from './lib/env'
+
 
 var opts = {
   compress: {
@@ -42,13 +44,22 @@ var opts = {
     path: './views',
     extname: '.jsx',
     doctype: '<!DOCTYPE html>',
-    cache: 'production' == process.env.NODE_ENV,
-    beautify: 'production' != process.env.NODE_ENV,
+    cache: env.deploy,
+    beautify: env.local,
   },
 
   io: {
     // path: '/js',
   },
+
+  wechat: {
+    appid: process.env.WX_APPID,
+    secret: process.env.WX_SECRET,
+    token: process.env.WX_TOKEN,
+    // encodingAESKey: process.env.WX_AESKEY,
+  },
+
+  rootUrl: process.env.ROOTURL,
 }
 
 if ('production' == process.env.NODE_ENV) {

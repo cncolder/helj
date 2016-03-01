@@ -1,7 +1,8 @@
 import passport from 'koa-passport'
 import compose from 'koa-compose'
 import User from '../models/user'
-const log = require('debug')('app:middlewares:passport')
+const log = require('../lib/debug')('app:middlewares:passport')
+
 
 passport.use(User.createStrategy())
 passport.serializeUser(User.serializeUser())

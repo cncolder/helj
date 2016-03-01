@@ -1,4 +1,8 @@
 import etag from 'koa-etag'
-import opts from './options'
+import config from '../config'
 
-export default etag(opts.etag)
+
+const opts = config.etag
+
+
+export default etag(opts)

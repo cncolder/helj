@@ -1,6 +1,8 @@
 import conditionalGet from 'koa-conditional-get'
-import options from './options'
+import config from '../config'
 
-const opts = options.conditionalGet
+
+const opts = config.conditionalGet
+
 
 export default conditionalGet(opts)

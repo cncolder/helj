@@ -5,7 +5,6 @@
 import models from './models'
 import fixture from './models/fixture'
 import './lib/error'
-// import Cookies from 'cookies'
 import convert from 'koa-convert'
 import Koa from 'koa'
 import IO from 'koa-socket'
@@ -14,10 +13,6 @@ import middlewares, {
   io as middlewaresIO
 }
 from './middlewares'
-import routes, {
-  io as routesIO
-}
-from './routes'
 const log = require('debug')('app:app')
 
 /**
@@ -53,7 +48,6 @@ app.keys = ['wo long gang']
  */
 
 app.use(middlewares)
-app.use(routes)
 
 /**
  * io
@@ -78,7 +72,6 @@ io.socket.adapter(ioAdapterMongo)
  */
 
 io.use(middlewaresIO)
-io.use(routesIO)
 
 io.on('join', (ctx, data) => {
   log('join event fired %o', data)
@@ -89,10 +82,6 @@ io.on('error', log)
 /**
  * server
  */
-
-// import hot from './lib/hot'
-
-// hot(app, io)
 
 const PORT = process.env.PORT || 3000
 const HOST = process.env.HOST || 'localhost'

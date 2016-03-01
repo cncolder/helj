@@ -2,10 +2,11 @@ import path from 'path'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import beautify from 'js-beautify'
-import options from './options'
-const log = require('debug')('app:middlewares:react')
+import config from '../config'
+const log = require('../lib/debug')('app:middlewares:react')
 
-const opts = options.react
+
+const opts = config.react
 const viewsPath = path.join(process.cwd(), opts.path)
 
 export default async(ctx, next) => {

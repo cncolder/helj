@@ -1,7 +1,8 @@
 import useragent from 'useragent'
 import mongoose from './mongoose'
 import toJSON from './plugins/to-json'
-const log = require('debug')('app:models:browser-error')
+const log = require('../lib/debug')('app:models:browser-error')
+
 
 const schema = new mongoose.Schema({
   message: {

@@ -42,7 +42,7 @@ export default {
   },
   output: {
     path: join('./public/js/'),
-    filename: 'bundle.js',
+    filename: 'client.js',
     publicPath: '/js/',
   },
   devtool: PROD ? [] : 'inline-source-map',

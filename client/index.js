@@ -59,3 +59,7 @@ const provider = (
 )
 
 ReactDOM.render(provider, document.getElementById('client'))
+
+// navigator.geolocation.getCurrentPosition(position => {
+//   alert(`Latitude: ${position.coords.latitude} Longitude: ${position.coords.longitude}`)
+// })

@@ -1,6 +1,8 @@
 import responseTime from 'koa-response-time'
-import options from './options'
+import config from '../config'
 
-const opts = options.responseTime
+
+const opts = config.responseTime
+
 
 export default responseTime(opts)

@@ -1,4 +1,8 @@
 import compress from 'koa-compress'
-import opts from './options'
+import config from '../config'
 
-export default compress(opts.compress)
+
+const opts = config.compress
+
+
+export default compress(opts)

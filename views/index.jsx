@@ -8,7 +8,7 @@ export default class extends React.Component {
       <Layout>
         <div id="client"></div>
         <script src="/js/vendor.js"></script>
-        <script src="/js/bundle.js"></script>
+        <script src="/js/client.js"></script>
       </Layout>
     )
   }

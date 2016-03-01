@@ -1,6 +1,9 @@
 import mongoose from 'mongoose'
-const log = require('debug')('app:models:mongoose')
+import env from '../lib/env'
+const log = require('../lib/debug')('app:models:mongoose')
 
+
+mongoose.set('debug', env.dev)
 
 mongoose.connect(process.env.MONGO_URL)
 

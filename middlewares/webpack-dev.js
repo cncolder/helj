@@ -4,6 +4,7 @@ import compiler, {
 }
 from './webpack-compiler'
 
+
 export default webpackDevMiddleware(compiler, {
   // noInfo: true,
   // lazy: true,

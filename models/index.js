@@ -3,7 +3,10 @@
  */
 
 import mongoose from './mongoose'
-// import BrowserError from './browser-error'
-import User from './user'
+import './browser-error'
+import './configure'
+import './user'
+import './wechat-oauth-token'
+
 
 export default mongoose.models

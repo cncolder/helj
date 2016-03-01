@@ -6,7 +6,7 @@
 
 import env from '../lib/env'
 import User from './user'
-const log = require('debug')('app:models:fixture')
+const log = require('../lib/debug')('app:models:fixture')
 
 const fixture = {
   0: 0,

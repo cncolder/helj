@@ -1,7 +1,9 @@
 import session from 'koa-generic-session'
-import options from './options'
-const log = require('debug')('app:middlewares:session')
+import config from '../config'
+const log = require('../lib/debug')('app:middlewares:session')
 
-const opts = options.session
+
+const opts = config.session
+
 
 export default session(opts)
