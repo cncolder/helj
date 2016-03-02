@@ -41,7 +41,7 @@ app.use = mw => _appUse.call(app, convert(mw))
  */
 
 app.proxy = true
-app.keys = ['wo long gang']
+app.keys = ['wolongang']
 
 /**
  * app middlewares

@@ -56,7 +56,7 @@ var opts = {
     appid: process.env.WX_APPID,
     secret: process.env.WX_SECRET,
     token: process.env.WX_TOKEN,
-    // encodingAESKey: process.env.WX_AESKEY,
+    encodingAESKey: process.env.WX_AESKEY,
   },
 
   rootUrl: process.env.ROOTURL,

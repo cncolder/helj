@@ -4,10 +4,10 @@ import conditionalGet from './conditional-get'
 import convert from 'koa-convert'
 import etag from './etag'
 import logger from './logger'
-  // import passport, {
-  //   io as passportIO,
-  // }
-  // from './passport'
+import passport, {
+  io as passportIO,
+}
+from './passport'
 import react from './react'
 import responseTime from './response-time'
 import serveStatic from './serve-static'

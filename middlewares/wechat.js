@@ -149,5 +149,4 @@ class Router {
 
 export default wechat(config.wechat).middleware(function*(next) {
   yield new Router(this).run()
-  log(next)
 })

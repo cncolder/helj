@@ -1,8 +1,10 @@
 import path from 'path'
 import autoprefixer from 'autoprefixer'
 import webpack from 'webpack'
+import pkg from './package.json'
 
 
+const version = pkg.version
 const join = p => path.join(__dirname, p)
 const PROD = 'production' == process.env.NODE_ENV
 
@@ -81,6 +83,7 @@ export default {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
+        VERSION: JSON.stringify(version),
       },
     }),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
@@ -96,6 +99,7 @@ export default {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
+        VERSION: JSON.stringify(version),
       },
     }),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),

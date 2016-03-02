@@ -9,13 +9,12 @@ import * as regex from '../lib/regex'
 import mongoose from './mongoose'
 import passportLocalMongoose from 'passport-local-mongoose'
 import toJSON from './plugins/to-json'
-const log = require('debug')('app:models:user')
+const log = require('../lib/debug')('app:models:user')
 
 
 const Schema = mongoose.Schema
 const sexEnum = ['unknown', 'male', 'female']
 const schema = new Schema({
-  username: String,
   wechat: {
     subscribe: Boolean,
     openid: {
@@ -39,6 +38,19 @@ const schema = new Schema({
     groupid: Number,
     token: Schema.Types.Mixed,
   },
+}, {
+  timestamp: true,
+})
+
+schema.plugin(passportLocalMongoose, {
+  // https://github.com/saintedlama/passport-local-mongoose#options
+  keylen: 32,
+  iterations: 8,
+  usernameField: 'openid',
+})
+
+schema.plugin(toJSON, {
+  hide: 'hash salt',
 })
 
 schema.virtual('wechat.subscribe_time')
@@ -48,6 +60,52 @@ schema.virtual('wechat.subscribe_time')
   .set(function(v) {
     this.wechat.subscribeAt = new Date(v * 1000)
   })
+
+schema.statics.signup = function(user, password) {
+  user.openid = user.openid.replace(/\s/g, '')
+  password = password.replace(/\s/g, '')
+  expect(password).to.be.a('string')
+  expect(password.length).to.be.at.least(3)
+  return new Promise((resolve, reject) => {
+    this.register(user, password, (err, user) => {
+      if (err) return reject(err)
+      resolve(user)
+    })
+  })
+}
+
+schema.statics.auth = function(openid, password) {
+  return this.findByUsername(openid)
+    .then(user => {
+      expect(user).to.be.exist
+      return user.auth(password)
+    })
+}
+
+schema.methods.auth = function(password) {
+  password = password.replace(/\s/g, '')
+  return new Promise((resolve, reject) => {
+    this.authenticate(password, (err, user, passwordErr) => {
+      if (err || passwordErr) return reject(err || passwordErr)
+      resolve(user)
+    })
+  })
+}
+
+schema.methods.modifyPassword = function(old, password) {
+  password = password.replace(/\s/g, '')
+  expect(password).to.be.a('string', 'invalid password')
+  expect(password.length).to.be.at.least(3, 'password too short')
+  return this.auth(old)
+    .then(user => {
+      return new Promise((resolve, reject) => {
+        this.setPassword(password, (err, user, passwordErr) => {
+          if (err || passwordErr) return reject(err || passwordErr)
+          resolve(user)
+        })
+      })
+    })
+}
 
 
 export default mongoose.model('User', schema)

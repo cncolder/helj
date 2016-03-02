@@ -1,6 +1,6 @@
 {
   "name": "helj",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "colder",
   "description": "He Long Ji",
   "keywords": [],
@@ -140,13 +140,19 @@
       "HOST": "127.0.0.1",
       "MONGO_URL": "mongodb://127.0.0.1:27017/heljdev?auto_reconnect=true",
       "NODE_ENV": "staging",
-      "PORT": 3000
+      "PORT": 3000,
+      "ROOTURL": "http://dev.helj.co"
     },
     "env_production": {
       "DEBUG": "app:*",
       "HOST": "127.0.0.1",
       "NODE_ENV": "production",
-      "PORT": 7777
+      "PORT": 7777,
+      "ROOTURL": "http://helj.co",
+      "WX_APPID": "wx1d7238d9073763b5",
+      "WX_SECRET": "0cd05080045f5b77bf0f13d412b7a8c8",
+      "WX_TOKEN": "wolongang",
+      "WX_AESKEY": "E8pr1HjyNdYbvvSb6nBuHpwqalCaLXw2Okymk9ZiVHe"
     },
     "ignore_watch": [
       "[\\/\\\\]\\./",
