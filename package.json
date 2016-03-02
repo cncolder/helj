@@ -141,7 +141,11 @@
       "MONGO_URL": "mongodb://127.0.0.1:27017/heljdev?auto_reconnect=true",
       "NODE_ENV": "staging",
       "PORT": 3000,
-      "ROOTURL": "http://dev.helj.co"
+      "ROOTURL": "http://dev.helj.co",
+      "WX_APPID": "wx3ac2016295b3761c",
+      "WX_SECRET": "070d0e2b0c8f84c6193a82461019b79e",
+      "WX_TOKEN": "wolongang",
+      "WX_AESKEY": "PE31Xvl5S34CmRJZTE6s4QgqRcPCpOjlAI3IPzS6qRu"
     },
     "env_production": {
       "DEBUG": "app:*",
