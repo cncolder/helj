@@ -7,6 +7,7 @@
 import mongoose from './mongoose'
 import './sample'
 import './shop'
+import toJSON from './plugins/to-json'
 const log = require('../lib/debug')('app:models:product')
 
 
@@ -35,6 +36,8 @@ const schema = new Schema({
 }, {
   timestamps: true,
 })
+
+schema.plugin(toJSON)
 
 
 export default mongoose.model('Product', schema)

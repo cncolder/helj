@@ -67,14 +67,14 @@ export default {
       test: /\.less$/,
       loader: 'style!css!postcss-loader!less?noIeCompat',
     }, {
-      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: /\.woff(2)?/,
       loader: 'url',
       query: {
         limit: 10 * 1000, // 10kb
         minetype: 'application/font-woff',
       },
     }, {
-      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: /\.(ttf|eot|svg)/,
       loader: 'file',
     }],
   },

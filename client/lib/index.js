@@ -1,7 +1,8 @@
 export React, {
-  Component, PropTypes,
+  PropTypes,
 }
 from 'react'
+export Component from './component'
 export {
   connect,
 }
