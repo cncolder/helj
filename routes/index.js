@@ -8,6 +8,7 @@ import Router from 'koa-router'
 import compose from 'koa-compose'
 import role from './role'
 import auth from './auth'
+import shop from './shop'
 import me from './me'
 import browserError from './browser-error'
 import wechat from './wechat'
@@ -38,9 +39,9 @@ const router = new Router()
 
 const index = router.routes()
 
-export const io = compose([auth, me])
+export const io = compose([auth, shop, me])
 
 
 export default compose([
-  index, wechat, browserError,
+  index, shop, wechat, browserError,
 ])

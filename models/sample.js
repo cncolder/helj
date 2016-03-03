@@ -5,7 +5,7 @@
  */
 
 import mongoose from './mongoose'
-const log = require('../lib/debug')('app:models:food')
+const log = require('../lib/debug')('app:models:sample')
 
 
 const Schema = mongoose.Schema
@@ -38,7 +38,7 @@ const schema = new Schema({
     min: 0,
     default: 0,
   },
-  image: {
+  cover: {
     type: String,
   },
   disabled: {
@@ -50,4 +50,4 @@ const schema = new Schema({
 })
 
 
-export default mongoose.model('Food', schema)
+export default mongoose.model('Sample', schema)

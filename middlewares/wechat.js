@@ -78,7 +78,10 @@ class Router {
     }
   }
 
-  async text() {}
+  async text() {
+    const ctx = this.ctx
+    ctx.body = config.rootUrl
+  }
 
   async image() {}
 

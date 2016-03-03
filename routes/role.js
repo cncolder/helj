@@ -2,7 +2,6 @@ const log = require('debug')('app:routes:role')
 
 
 export default {
-
   0: 0,
 
   is(type) {
@@ -28,11 +27,11 @@ export default {
 
       try {
         switch (type) {
-          case 'access home page':
+          case 'access public page':
             return next()
 
-          case 'access player page':
-            if (~['player'].indexOf(user.role))
+          case 'access wechater page':
+            if (~['wechater'].indexOf(user.role))
               return next()
             else
               return ctx.status = 401

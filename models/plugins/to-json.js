@@ -1,4 +1,4 @@
-export default (schema, options) => {
+export default (schema, options = {}) => {
   options = Object.assign({
     hide: '',
     map: {

@@ -21,11 +21,11 @@ export default {
        * noInfo - Set to true to disable informational console logging.
        * quiet - Set to true to disable all console logging.
        */
-      'webpack-hot-middleware/client?reload=true',
+      'webpack-hot-middleware/client?reload=true&overlay=false',
       './client',
     ],
     vendor: [
-      './client/weui.less',
+      './client/style.less',
       'babel-polyfill',
       'debug',
       'history',
@@ -52,7 +52,7 @@ export default {
     noParse: /socket\.io\-client/,
     loaders: [{
       test: /\.jsx?$/,
-      include: /client/,
+      include: /client|lib/,
       exclude: /node_modules/,
       loader: 'babel',
       query: {

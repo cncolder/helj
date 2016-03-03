@@ -18,7 +18,7 @@ var opts = {
 
   serveStatic: {
     root: './public',
-    defer: true,
+    // defer: true,
     // maxAge: ms('1 day'),
     // defer: false,
     // hidden: false,

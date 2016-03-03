@@ -1,22 +1,14 @@
-/**
- * Styles
- */
-
-import 'weui'
-
-/**
- * Client index
- */
-
+import './style.less'
+import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import reactTapEventPlugin from 'react-tap-event-plugin'
 import {
-  Provider
+  Provider,
 }
 from 'react-redux'
 import {
-  Router, Route, IndexRoute, browserHistory
+  Router, Route, IndexRoute, browserHistory,
 }
 from 'react-router'
 import {
@@ -25,10 +17,10 @@ import {
 from 'react-router-redux'
 import store from './store'
 import subscribeSocketIO from './store/subscribe-socket.io'
-import App from './containers/app'
-import Layout from './containers/layout'
-import Me from './containers/me'
-import NoMatch from './containers/no-match'
+import {
+  App, Layout, Me, NoMatch,
+}
+from './containers'
 const log = require('debug')('client:index')
 
 /**

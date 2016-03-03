@@ -3,6 +3,7 @@
  */
 
 import io from 'socket.io-client/socket.io'
+import Err from '../../lib/err'
 const log = require('debug')('client:lib:socket')
 
 
@@ -14,12 +15,25 @@ socket.request = (method, url, data) => {
       method, url, data,
     }, (err, res) => {
       log('err: %o res: %o', err, res)
+      const {
+        status, data
+      } = res
       if (err) {
         reject(err)
-      } else if (res.status >= 400) {
-        reject(Object.assign(new Error(), res.data))
+      } else if (status >= 400) {
+        if (data) {
+          reject(new Err({
+            ...data,
+            message: 'AssertionError' == data.name ? data.message.split(':')[0] :
+              data.message,
+          }))
+        } else {
+          reject(new Err({
+            status,
+          }))
+        }
       } else {
-        resolve(res.data)
+        resolve(data)
       }
     })
   })
@@ -29,7 +43,6 @@ socket.get = (url) => socket.request('GET', url)
 socket.post = (url, data) => socket.request('POST', url, data)
 socket.put = (url, data) => socket.request('PUT', url, data)
 socket.del = (url) => socket.request('DELETE', url)
-
 
 socket.on('connect', () => log('connect'))
 socket.on('error', e => log('error %o', e))

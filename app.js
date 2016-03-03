@@ -3,23 +3,18 @@
  */
 
 import models from './models'
-import fixture from './models/fixture'
+import './models/fixture'
 import './lib/error'
 import convert from 'koa-convert'
 import Koa from 'koa'
 import IO from 'koa-socket'
 import ioAdapterMongo from './lib/io-adapter-mongo'
+import koaSocketRequest from './lib/koa-socket-request'
 import middlewares, {
   io as middlewaresIO
 }
 from './middlewares'
 const log = require('debug')('app:app')
-
-/**
- * db fixtures
- */
-
-fixture()
 
 /**
  * app
@@ -61,11 +56,15 @@ const io = new IO()
 
 // use following snippet to make migration easier.
 // https://github.com/gyson/koa-convert#migration
-const _ioUse = io.use
-  // io.use = mw => _ioUse.call(io, convert(mw))
+// const _ioUse = io.use
+// io.use = mw => _ioUse.call(io, convert(mw))
+
+const context = require('koa/lib/context')
+io.context = Object.create(context)
 
 io.attach(app)
 io.socket.adapter(ioAdapterMongo)
+koaSocketRequest(app, io)
 
 /**
  * io middlewares
@@ -78,6 +77,13 @@ io.on('join', (ctx, data) => {
 })
 
 io.on('error', log)
+
+io.on('request', (ctx, data) => {
+  ctx.acknowledge(null, {
+    status: ctx.status,
+    data: ctx.body,
+  })
+})
 
 /**
  * server

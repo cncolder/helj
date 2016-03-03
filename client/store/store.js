@@ -2,30 +2,35 @@
  * Store singleton
  */
 
+import env from '../../lib/env'
+import isPromise from '../lib/is-promise'
 import {
   createStore, applyMiddleware, combineReducers
 }
 from 'redux'
+import promisePendingMiddleware from '../lib/redux-promise-pending'
 import promiseMiddleware from 'redux-promise'
+import logger from 'redux-logger'
 import {
   routerReducer
 }
 from 'react-router-redux'
 import reducers from '../reducers'
 import initialState from './initial-state'
-const log = require('debug')('client:store')
+import subscribeSocketIO from './subscribe-socket.io'
+const log = require('debug')('client:store:store')
 
 
-let createStoreWithMiddleware
+let middlewares = [promisePendingMiddleware, promiseMiddleware]
 
-if ('production' == process.env.NODE_ENV) {
-  createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore)
-} else {
-  createStoreWithMiddleware = applyMiddleware(require('redux-logger')({
+if (env.local) {
+  middlewares.push(logger({
     collapsed: true,
+    duration: true,
     // Only output resolved promise result
-    predicate: (state, action) => !action.payload.then
-  }), promiseMiddleware)(createStore)
+    predicate: (state, action) => !isPromise(action.payload) && !action.type.endsWith(
+      '_PENDING'),
+  }))
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
@@ -36,10 +41,12 @@ if ('production' == process.env.NODE_ENV) {
   }
 }
 
-const store = createStoreWithMiddleware(combineReducers({
+const reducer = combineReducers({
   ...reducers,
   routing: routerReducer,
-}))
+}, initialState)
+
+const store = applyMiddleware(...middlewares)(createStore)(reducer)
 
 
 export default store

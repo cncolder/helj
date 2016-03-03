@@ -27,10 +27,10 @@ let middlewaresForApp = [
   conditionalGet,
   etag,
   serveStatic,
-  session,
-  // passport,
-  react,
   wechatDetector,
+  session,
+  passport,
+  react,
   routes,
   wechat,
 ]
@@ -44,7 +44,8 @@ if (env.local) {
 
 let middlewaresForIO = [
   session,
-  // passportIO,
+  passportIO,
+  routesIO,
 ]
 
 export const io = convert.compose(middlewaresForIO)
