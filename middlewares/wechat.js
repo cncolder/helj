@@ -16,6 +16,11 @@ const WECHAT_MENU = {
     name: '叫外卖',
     url: config.rootUrl,
     sub_button: [],
+  }, {
+    type: 'view',
+    name: '退出',
+    url: `${config.rootUrl}/auth/logout`,
+    sub_button: [],
   }, ],
 }
 
@@ -66,7 +71,7 @@ class Router {
       this.unknown()
     }
 
-    ctx.wxsession.uid = ctx.msg.uid
+    // ctx.wxsession.uid = ctx.msg.uid
     ctx.msg.answer = ctx.body
 
     if (ctx.body) log('answer %o', ctx.body)

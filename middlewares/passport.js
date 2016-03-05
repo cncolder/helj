@@ -1,6 +1,7 @@
 import passport from 'koa-passport'
 import compose from 'koa-compose'
 import User from '../models/user'
+import config from '../config'
 const log = require('../lib/debug')('app:middlewares:passport')
 
 

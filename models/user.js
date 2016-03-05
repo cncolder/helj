@@ -46,7 +46,6 @@ schema.plugin(passportLocalMongoose, {
   // https://github.com/saintedlama/passport-local-mongoose#options
   keylen: 32,
   iterations: 8,
-  usernameField: 'openid',
 })
 
 schema.plugin(toJSON, {
@@ -55,14 +54,34 @@ schema.plugin(toJSON, {
 
 schema.virtual('wechat.subscribe_time')
   .get(function() {
-    return (this.wechat.subscribeAt.getTime() / 1000).toFixed()
+    return ((this.wechat.subscribeAt || new Date()).getTime() / 1000).toFixed()
   })
   .set(function(v) {
     this.wechat.subscribeAt = new Date(v * 1000)
   })
 
+schema.statics.findOneAndRegisterWechat = function(openid, wechat, callback) {
+  const query = {
+    'wechat.openid': openid,
+  }
+  const update = {
+    username: openid,
+    role: 'wechat',
+    wechat,
+  }
+  const options = {
+    new: true,
+    upsert: true,
+  }
+  if (callback) {
+    this.findOneAndUpdate(query, update, options, callback)
+  } else {
+    return this.findOneAndUpdate(query, update, options)
+  }
+}
+
 schema.statics.signup = function(user, password) {
-  user.openid = user.openid.replace(/\s/g, '')
+  user.username = user.username.replace(/\s/g, '')
   password = password.replace(/\s/g, '')
   expect(password).to.be.a('string')
   expect(password.length).to.be.at.least(3)
@@ -74,8 +93,8 @@ schema.statics.signup = function(user, password) {
   })
 }
 
-schema.statics.auth = function(openid, password) {
-  return this.findByUsername(openid)
+schema.statics.auth = function(username, password) {
+  return this.findByUsername(username)
     .then(user => {
       expect(user).to.be.exist
       return user.auth(password)

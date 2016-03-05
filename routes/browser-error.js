@@ -1,4 +1,4 @@
-import debug from 'debug'
+import debug from '../lib/debug'
 import Router from 'koa-router'
 import BrowserError from '../models/browser-error'
 

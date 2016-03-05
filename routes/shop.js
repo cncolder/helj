@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import role from './role'
 import Shop from '../models/shop'
 import expect from '../lib/expect'
-const log = require('debug')('app:routes:shop')
+const log = require('../lib/debug')('app:routes:shop')
 
 
 const router = new Router({

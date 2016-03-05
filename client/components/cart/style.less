@@ -16,9 +16,16 @@
 }
 
 .cart-info {
-    height: 40px;
+    margin-top: 0;
+    height: 42px;
+    background-color: transparent;
+    &:before, &:after {
+        content: none;
+    }
+    .cart-bar {
+        padding: 0;
+    }
     .icon-cart, .cart-total-amount, .cart-total-price, .cart-payment {
-        display: inline-block;
         vertical-align: middle;
     }
     .icon-cart {

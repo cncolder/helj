@@ -75,12 +75,20 @@ export default class Cart extends Component {
     let totalPrice = (cart.products || []).reduce(((acc, item) => acc + item.sample.price * item.amount),
       0)
     return (
-      <div className="cart-info">
-        <i className="icon-cart" onClick={ this.onCartInfoClick } />
-        <span className="cart-total-amount" onClick={ this.onCartInfoClick }>{ totalAmount }</span>
-        <span className="cart-total-price" onClick={ this.onCartInfoClick }>¥{ totalPrice }</span>
-        <Button className="cart-payment" type="primary" size="small" onClick={ this.props.onPay }>结算</Button>
-      </div>
+      <Cells className="cart-info">
+        <Cell className="cart-bar">
+          <CellHeader onClick={ this.onCartInfoClick }>
+            <i className="icon-cart" />
+          </CellHeader>
+          <CellBody onClick={ this.onCartInfoClick }>
+            <span className="cart-total-amount">{ totalAmount }</span>
+            <span className="cart-total-price">¥{ totalPrice }</span>
+          </CellBody>
+          <CellBody>
+            <Button className="cart-payment" type="primary" size="small" onClick={ this.props.onPay }>结算</Button>
+          </CellBody>
+        </Cell>
+      </Cells>
     )
   }
 }

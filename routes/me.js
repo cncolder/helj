@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import role from './role'
 import expect from '../lib/expect'
-const log = require('debug')('app:routes:me')
+const log = require('../lib/debug')('app:routes:me')
 
 
 const router = new Router({

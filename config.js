@@ -27,18 +27,12 @@ var opts = {
 
   session: {
     cookie: {
-      maxage: ms('1 day'),
+      maxAge: null,
     },
     store: new MongoStore({
-      url: process.env.MONGO_URL,
+      url: env.MONGO_URL,
     }),
   },
-
-  // session: {
-  //   cookie: {
-  //     maxage: ms('1 day'),
-  //   },
-  // },
 
   react: {
     path: './views',
@@ -53,19 +47,17 @@ var opts = {
   },
 
   wechat: {
-    appid: process.env.WX_APPID,
-    secret: process.env.WX_SECRET,
-    token: process.env.WX_TOKEN,
-    encodingAESKey: process.env.WX_AESKEY,
+    appid: env.WX_APPID,
+    secret: env.WX_SECRET,
+    token: env.WX_TOKEN,
+    encodingAESKey: env.WX_AESKEY,
   },
 
-  rootUrl: process.env.ROOTURL,
+  rootUrl: env.ROOTURL,
 }
 
-if ('production' == process.env.NODE_ENV) {
-  // Object.assign(opts.static, {
-  //   maxAge: ms('1 day'),
-  // })
+if (env.deploy) {
+  opts.session.cookie.maxAge = ms('1 hour')
 }
 
 export default opts

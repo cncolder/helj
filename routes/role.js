@@ -1,4 +1,4 @@
-const log = require('debug')('app:routes:role')
+const log = require('../lib/debug')('app:routes:role')
 
 
 export default {
@@ -30,8 +30,8 @@ export default {
           case 'access public page':
             return next()
 
-          case 'access wechater page':
-            if (~['wechater'].indexOf(user.role))
+          case 'access wechat page':
+            if (~['wechat'].indexOf(user.role))
               return next()
             else
               return ctx.status = 401

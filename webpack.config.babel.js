@@ -74,9 +74,16 @@ export default {
         minetype: 'application/font-woff',
       },
     }, {
-      test: /\.(ttf|eot|svg)/,
+      test: /\.(ttf)/,
+      loader: 'url',
+      query: {
+        limit: 10 * 1000, // 10kb
+        minetype: 'application/octet-stream',
+      },
+    }, {
+      test: /\.(eot|svg)/,
       loader: 'file',
-    }],
+    }, ],
   },
   postcss: () => [autoprefixer],
   plugins: PROD ? [

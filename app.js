@@ -14,7 +14,7 @@ import middlewares, {
   io as middlewaresIO
 }
 from './middlewares'
-const log = require('debug')('app:app')
+const log = require('./lib/debug')('app:app')
 
 /**
  * app
