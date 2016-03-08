@@ -1,0 +1,56 @@
+import http from 'http'
+import url from 'url'
+import qs from 'qs'
+import Socket from 'koa-socket/lib/socket'
+const log = require('./debug')('app:lib:koa-socket-request')
+
+
+export default (app, io) => {
+  Socket.prototype.on = function(event, handler) {
+    this.socket.on(event, (data, cb) => {
+      log(`socket on ${event}`)
+
+      const request = this.socket.conn.request
+      const req = Object.assign(new http.IncomingMessage(), request)
+      const res = {
+        status: 404,
+        // session middleware use these functions.
+        setHeader() {},
+        getHeader() {},
+        removeHeader() {},
+      }
+
+      if (event == 'request') {
+        req.method = data.method || 'GET'
+        req.url = data.url
+        req.query = qs.parse(url.parse(req.url).query)
+        req.body = data.data || {}
+      }
+
+      const ctx = Object.assign(app.createContext(req, res), {
+        io,
+        sock: this,
+          event: event,
+          data: data,
+          acknowledge: cb,
+      })
+
+      if (!this.middleware) {
+        return handler(ctx, data)
+      }
+
+      this.middleware(ctx)
+        .then(() => {
+          log('io middleware complete with status %o', ctx.status)
+          ctx.status = ctx.status || 404
+          handler(ctx, data)
+        })
+        .catch(err => {
+          log('io middleware failure', err, err.stack.split('\n').slice(0, 2).join('\n'))
+          ctx.body = err
+          ctx.status = (ctx.status && ctx.status >= 400) ? ctx.status : 500
+          handler(ctx)
+        })
+    })
+  }
+}

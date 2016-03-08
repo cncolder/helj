@@ -1,23 +1,30 @@
-/**
- * Wechat OAuth Token
- */
+'use strict';
 
-import mongoose from './mongoose'
-const log = require('../lib/debug')('app:models:wechat-oauth-token')
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
+var _mongoose = require('./mongoose');
 
-const schema = new mongoose.Schema({
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var log = require('../lib/debug')('app:models:wechat-oauth-token'); /**
+                                                                     * Wechat OAuth Token
+                                                                     */
+
+var schema = new _mongoose2.default.Schema({
   openid: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   token: {
-    type: mongoose.Schema.Types.Mixed,
-  },
+    type: _mongoose2.default.Schema.Types.Mixed
+  }
 }, {
-  timestamps: true,
-})
+  timestamps: true
+});
 
-
-export default mongoose.model('WechatOAuthToken', schema)
+exports.default = _mongoose2.default.model('WechatOAuthToken', schema);

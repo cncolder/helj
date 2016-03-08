@@ -1,10 +1,26 @@
-import useragent from 'useragent'
-import mongoose from './mongoose'
-import toJSON from './plugins/to-json'
-const log = require('../lib/debug')('app:models:browser-error')
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-const schema = new mongoose.Schema({
+var _useragent = require('useragent');
+
+var _useragent2 = _interopRequireDefault(_useragent);
+
+var _mongoose = require('./mongoose');
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _toJson = require('./plugins/to-json');
+
+var _toJson2 = _interopRequireDefault(_toJson);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var log = require('../lib/debug')('app:models:browser-error');
+
+var schema = new _mongoose2.default.Schema({
   message: {
     type: String,
     required: true
@@ -21,10 +37,10 @@ const schema = new mongoose.Schema({
   stack: String,
   referer: String,
   ua: {
-    type: mongoose.Schema.Types.Mixed,
-    set: value => useragent
-      .parse(value)
-      .toJSON()
+    type: _mongoose2.default.Schema.Types.Mixed,
+    set: function set(value) {
+      return _useragent2.default.parse(value).toJSON();
+    }
   },
   lang: String,
   ip: String,
@@ -43,8 +59,8 @@ const schema = new mongoose.Schema({
     dontVersionMe: true
   },
   timestamps: false
-})
+});
 
-schema.plugin(toJSON)
+schema.plugin(_toJson2.default);
 
-export default mongoose.model('BrowserError', schema)
+exports.default = _mongoose2.default.model('BrowserError', schema);

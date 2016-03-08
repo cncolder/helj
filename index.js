@@ -1,2 +1,7 @@
-require('babel-register')
-require('./app')
+'use strict';
+
+/**
+ * Project entry
+ */
+
+require('./app');

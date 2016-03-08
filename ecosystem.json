@@ -1,0 +1,74 @@
+{
+  "apps": [{
+    "env": {
+      "DEBUG": "app:*,koa:*,socket.io:*",
+      "DEBUG_COLORS": 1,
+      "HOST": "0.0.0.0",
+      "MONGO_URL": "mongodb://127.0.0.1:27017/helj?auto_reconnect=true",
+      "NODE_ENV": "development",
+      "PORT": 3000,
+      "ROOTURL": "http://sr0bwgcolk.proxy.qqbrowser.cc",
+      "WX_APPID": "wx8361071853a18016",
+      "WX_SECRET": "d4624c36b6795d1d99dcf0547af5443d",
+      "WX_TOKEN": "wechatoken"
+    },
+    "env_staging": {
+      "name": "heljdev",
+      "DEBUG": "app:*",
+      "HOST": "127.0.0.1",
+      "MONGO_URL": "mongodb://127.0.0.1:27017/heljdev?auto_reconnect=true",
+      "NODE_ENV": "staging",
+      "PORT": 3333,
+      "ROOTURL": "http://dev.helj.co",
+      "WX_APPID": "wx3ac2016295b3761c",
+      "WX_SECRET": "070d0e2b0c8f84c6193a82461019b79e",
+      "WX_TOKEN": "wolongang",
+      "WX_AESKEY": "PE31Xvl5S34CmRJZTE6s4QgqRcPCpOjlAI3IPzS6qRu"
+    },
+    "env_production": {
+      "DEBUG": "app:*",
+      "HOST": "127.0.0.1",
+      "NODE_ENV": "production",
+      "PORT": 7777,
+      "ROOTURL": "http://helj.co",
+      "WX_APPID": "wx1d7238d9073763b5",
+      "WX_SECRET": "0cd05080045f5b77bf0f13d412b7a8c8",
+      "WX_TOKEN": "wolongang",
+      "WX_AESKEY": "E8pr1HjyNdYbvvSb6nBuHpwqalCaLXw2Okymk9ZiVHe"
+    },
+    "ignore_watch": [
+      "[\\/\\\\]\\./",
+      ".babel",
+      ".git",
+      "client",
+      "node_modules",
+      "gulpfile",
+      "public",
+      "src",
+      "test",
+      "views"
+    ],
+    "instances": "1",
+    "name": "helj",
+    "script": ".",
+    "watch": false
+  }],
+  "deploy": {
+    "staging": {
+      "host": "dev.helj.co",
+      "path": "/var/www/heljdev",
+      "post-deploy": "cnpm install --production --unsafe-perm --no-bin-links ; pm2 startOrRestart ecosystem.json --env staging ; cnpm prune",
+      "ref": "origin/dev",
+      "repo": "/var/git/helj",
+      "user": "root"
+    },
+    "production": {
+      "host": "helj.co",
+      "path": "/var/www/helj",
+      "post-deploy": "cnpm install --production --unsafe-perm --no-bin-links ; pm2 startOrRestart ecosystem.json --env production ; cnpm prune",
+      "ref": "origin/master",
+      "repo": "/var/git/helj",
+      "user": "root"
+    }
+  }
+}

@@ -1,12 +1,23 @@
-/**
- * import all models
- */
+'use strict';
 
-import mongoose from './mongoose'
-import './browser-error'
-import './configure'
-import './user'
-import './wechat-oauth-token'
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
+var _mongoose = require('./mongoose');
 
-export default mongoose.models
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+require('./browser-error');
+
+require('./configure');
+
+require('./user');
+
+require('./wechat-oauth-token');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _mongoose2.default.models; /**
+                                              * import all models
+                                              */

@@ -1,36 +1,47 @@
-/**
- * Food
- *
- * Main goods infomation in shop
- */
+'use strict';
 
-import mongoose from './mongoose'
-import './product'
-import toJSON from './plugins/to-json'
-const log = require('../lib/debug')('app:models:shop')
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
+var _mongoose = require('./mongoose');
 
-const Schema = mongoose.Schema
+var _mongoose2 = _interopRequireDefault(_mongoose);
 
-const schema = new Schema({
+require('./product');
+
+var _toJson = require('./plugins/to-json');
+
+var _toJson2 = _interopRequireDefault(_toJson);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var log = require('../lib/debug')('app:models:shop'); /**
+                                                       * Food
+                                                       *
+                                                       * Main goods infomation in shop
+                                                       */
+
+var Schema = _mongoose2.default.Schema;
+
+var schema = new Schema({
   name: {
     type: String,
     trim: true,
-    required: true,
+    required: true
   },
   products: [{
     type: Schema.Types.ObjectId,
-    ref: 'Product',
-  }, ],
+    ref: 'Product'
+  }],
   disabled: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 }, {
-  timestamps: true,
-})
+  timestamps: true
+});
 
-schema.plugin(toJSON)
+schema.plugin(_toJson2.default);
 
-
-export default mongoose.model('Shop', schema)
+exports.default = _mongoose2.default.model('Shop', schema);

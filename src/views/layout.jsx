@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 
+
 export default class extends React.Component {
   render() {
     const title = '和隆记'

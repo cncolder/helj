@@ -1,58 +1,149 @@
-/**
- * Wechat OAuth router and middleware
- */
+'use strict';
 
-import Router from 'koa-router'
-import config from '../config'
-import User from '../models/user'
-import wechatOAuth from '../lib/wechat-oauth'
-import wechatApi from '../lib/wechat-api'
-const log = require('../lib/debug')('app:routes:wechat')
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
+var _regenerator = require('babel-runtime/regenerator');
 
-const router = new Router({
-    prefix: '/wechat',
-  })
-  .get('/authed', async ctx => {
-    ctx.assert(ctx.isWechat, 403, 'wechat only')
-    const code = ctx.query.code
-    const result = await wechatOAuth.getAccessTokenAsync(code)
-    const openid = result.data.openid
-    const userinfo = await wechatApi.getUserAsync(openid)
+var _regenerator2 = _interopRequireDefault(_regenerator);
 
-    let user = (await User.findOne({
-      'wechat.openid': openid,
-    })) || new User()
-    user.username = openid
-    user.role = 'wechat'
-    user.wechat = {
-      ...user.wechat, ...userinfo,
-    }
-    await user.save()
+var _extends2 = require('babel-runtime/helpers/extends');
 
-    ctx.session.passport = {
-      type: 'wechat',
-      user: user.username,
-    }
+var _extends3 = _interopRequireDefault(_extends2);
 
-    await ctx.redirect(ctx.query.state)
-  })
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
-const routes = router.routes()
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-routes.checkToken = async(ctx, next) => {
-  if (!ctx.session.wechat || !ctx.session.wechat.code) {
-    let redirectUrl = `${config.rootUrl}/wechat/authed/`
-    let url = ctx.iswx ? wechatOAuth.getAuthorizeURL(
-      redirectUrl, ctx.url, 'snsapi_base'
-    ) : wechatOAuth.getAuthorizeURLForWebsite(redirectUrl)
-    return ctx.redirect(url)
-  } else {
-    // delete ctx.session.wechatToken.code
-  }
+var _koaRouter = require('koa-router');
 
-  await next()
-}
+var _koaRouter2 = _interopRequireDefault(_koaRouter);
 
+var _config = require('../config');
 
-export default routes
+var _config2 = _interopRequireDefault(_config);
+
+var _user = require('../models/user');
+
+var _user2 = _interopRequireDefault(_user);
+
+var _wechatOauth = require('../lib/wechat-oauth');
+
+var _wechatOauth2 = _interopRequireDefault(_wechatOauth);
+
+var _wechatApi = require('../lib/wechat-api');
+
+var _wechatApi2 = _interopRequireDefault(_wechatApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var log = require('../lib/debug')('app:routes:wechat'); /**
+                                                         * Wechat OAuth router and middleware
+                                                         */
+
+var router = new _koaRouter2.default({
+  prefix: '/wechat'
+}).get('/authed', function () {
+  var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(ctx) {
+    var code, result, openid, userinfo, user;
+    return _regenerator2.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            ctx.assert(ctx.isWechat, 403, 'wechat only');
+            code = ctx.query.code;
+            _context.next = 4;
+            return _wechatOauth2.default.getAccessTokenAsync(code);
+
+          case 4:
+            result = _context.sent;
+            openid = result.data.openid;
+            _context.next = 8;
+            return _wechatApi2.default.getUserAsync(openid);
+
+          case 8:
+            userinfo = _context.sent;
+            _context.next = 11;
+            return _user2.default.findOne({
+              'wechat.openid': openid
+            });
+
+          case 11:
+            _context.t0 = _context.sent;
+
+            if (_context.t0) {
+              _context.next = 14;
+              break;
+            }
+
+            _context.t0 = new _user2.default();
+
+          case 14:
+            user = _context.t0;
+
+            user.username = openid;
+            user.role = 'wechat';
+            user.wechat = (0, _extends3.default)({}, user.wechat, userinfo);
+            _context.next = 20;
+            return user.save();
+
+          case 20:
+
+            ctx.session.passport = {
+              type: 'wechat',
+              user: user.username
+            };
+
+            _context.next = 23;
+            return ctx.redirect(ctx.query.state);
+
+          case 23:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, undefined);
+  })),
+      _this = undefined;
+  return function (_x) {
+    return ref.apply(_this, arguments);
+  };
+}());
+
+var routes = router.routes();
+
+routes.checkToken = function () {
+  var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(ctx, next) {
+    var redirectUrl, url;
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            if (!(!ctx.session.wechat || !ctx.session.wechat.code)) {
+              _context2.next = 6;
+              break;
+            }
+
+            redirectUrl = _config2.default.rootUrl + '/wechat/authed/';
+            url = ctx.iswx ? _wechatOauth2.default.getAuthorizeURL(redirectUrl, ctx.url, 'snsapi_base') : _wechatOauth2.default.getAuthorizeURLForWebsite(redirectUrl);
+            return _context2.abrupt('return', ctx.redirect(url));
+
+          case 6:
+            _context2.next = 8;
+            return next();
+
+          case 8:
+          case 'end':
+            return _context2.stop();
+        }
+      }
+    }, _callee2, undefined);
+  })),
+      _this = undefined;
+  return function (_x2, _x3) {
+    return ref.apply(_this, arguments);
+  };
+}();
+
+exports.default = routes;

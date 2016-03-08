@@ -1,56 +1,68 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _mongoose = require('./mongoose');
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _toJson = require('./plugins/to-json');
+
+var _toJson2 = _interopRequireDefault(_toJson);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /**
  * Food
  *
  * Main goods infomation in shop
  */
 
-import mongoose from './mongoose'
-import toJSON from './plugins/to-json'
-const log = require('../lib/debug')('app:models:sample')
+var log = require('../lib/debug')('app:models:sample');
 
+var Schema = _mongoose2.default.Schema;
 
-const Schema = mongoose.Schema
-
-const schema = new Schema({
+var schema = new Schema({
   sku: {
     type: String,
     lowercase: true,
     trim: true,
     required: true,
-    uniq: true,
+    uniq: true
   },
   name: {
     type: String,
     trim: true,
-    required: true,
+    required: true
   },
   desc: {
-    type: String,
+    type: String
   },
   tags: {
     type: [{
       type: String,
-      trim: true,
+      trim: true
     }],
-    default: [],
+    default: []
   },
   price: {
     type: Number,
     min: 0,
-    default: 0,
+    default: 0
   },
   cover: {
-    type: String,
+    type: String
   },
   disabled: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 }, {
-  timestamps: true,
-})
+  timestamps: true
+});
 
-schema.plugin(toJSON)
+schema.plugin(_toJson2.default);
 
-
-export default mongoose.model('Sample', schema)
+exports.default = _mongoose2.default.model('Sample', schema);

@@ -1,7 +1,22 @@
-import ms from 'ms'
-import MongoStore from 'koa-generic-session-mongo'
-import env from './lib/env'
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ms = require('ms');
+
+var _ms2 = _interopRequireDefault(_ms);
+
+var _koaGenericSessionMongo = require('koa-generic-session-mongo');
+
+var _koaGenericSessionMongo2 = _interopRequireDefault(_koaGenericSessionMongo);
+
+var _env = require('./lib/env');
+
+var _env2 = _interopRequireDefault(_env);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var opts = {
   compress: {
@@ -17,29 +32,29 @@ var opts = {
   },
 
   serveStatic: {
-    root: './public',
-    // defer: true,
-    // maxAge: ms('1 day'),
-    // defer: false,
-    // hidden: false,
-    // index: 'index.html',
+    root: './public'
   },
 
+  // defer: true,
+  // maxAge: ms('1 day'),
+  // defer: false,
+  // hidden: false,
+  // index: 'index.html',
   session: {
     cookie: {
-      maxAge: null,
+      maxAge: null
     },
-    store: new MongoStore({
-      url: env.MONGO_URL,
-    }),
+    store: new _koaGenericSessionMongo2.default({
+      url: _env2.default.MONGO_URL
+    })
   },
 
   react: {
     path: './views',
-    extname: '.jsx',
+    extname: '.js',
     doctype: '<!DOCTYPE html>',
-    cache: env.deploy,
-    beautify: env.local,
+    cache: _env2.default.deploy,
+    beautify: _env2.default.local
   },
 
   io: {
@@ -47,17 +62,17 @@ var opts = {
   },
 
   wechat: {
-    appid: env.WX_APPID,
-    secret: env.WX_SECRET,
-    token: env.WX_TOKEN,
-    encodingAESKey: env.WX_AESKEY,
+    appid: _env2.default.WX_APPID,
+    secret: _env2.default.WX_SECRET,
+    token: _env2.default.WX_TOKEN,
+    encodingAESKey: _env2.default.WX_AESKEY
   },
 
-  rootUrl: env.ROOTURL,
+  rootUrl: _env2.default.ROOTURL
+};
+
+if (_env2.default.deploy) {
+  opts.session.cookie.maxAge = (0, _ms2.default)('1 hour');
 }
 
-if (env.deploy) {
-  opts.session.cookie.maxAge = ms('1 hour')
-}
-
-export default opts
+exports.default = opts;

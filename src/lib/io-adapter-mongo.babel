@@ -1,0 +1,4 @@
+import adapter from 'socket.io-adapter-mongo'
+
+
+export default adapter(process.env.MONGO_URL)
