@@ -50,7 +50,7 @@ var WECHAT_MENU = {
   button: [{
     type: 'view',
     name: '电话外卖',
-    url: 'tel://85575557',
+    url: 'tel://85575556',
     sub_button: []
   }]
 };
