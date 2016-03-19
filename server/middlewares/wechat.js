@@ -303,7 +303,7 @@ var Router = function () {
       var ctx = this.ctx;
       var klass = this.constructor;
 
-      ctx.body = '用心做好外卖\n    微信点餐即将开放, 如需订餐请拨打电话 ' + this.constructor.textLink(85575556, 'tel://85575557');
+      ctx.body = '用心做好外卖\n    微信点餐即将开放, 如需订餐请拨打电话 ' + this.constructor.textLink(85575556, 'tel://85575556');
     }
   }, {
     key: 'help',
