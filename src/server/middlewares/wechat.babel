@@ -12,9 +12,9 @@ const log = require('../lib/debug')('app:middlewares:wechat')
 
 const WECHAT_MENU = {
   button: [{
-      type: 'view',
       name: '电话外卖',
-      url: 'tel://85575556',
+      type: 'click',
+      key: 'telephone',
       sub_button: [],
     },
     /*{
@@ -130,7 +130,15 @@ class Router {
     }
   }
 
-  async click() {}
+  async click() {
+    const ctx = this.ctx
+    const msg = ctx.msg
+    const {
+      name, key,
+    } = msg.event
+
+    if ('telephone' == key) this.intro()
+  }
 
   unknown() {
     const ctx = this.ctx
