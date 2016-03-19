@@ -32,10 +32,6 @@ var _server = require('react-dom/server');
 
 var _server2 = _interopRequireDefault(_server);
 
-var _jsBeautify = require('js-beautify');
-
-var _jsBeautify2 = _interopRequireDefault(_jsBeautify);
-
 var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
@@ -76,7 +72,7 @@ exports.default = function () {
 
                 if (opts.beautify) {
                   // NOTE: This will screw up some things where whitespace is important, and be subtly different than prod.
-                  markup = _jsBeautify2.default.html(markup);
+                  // markup = beautify.html(markup)
                 }
 
                 ctx.type = 'html';

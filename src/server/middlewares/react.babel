@@ -1,7 +1,6 @@
 import path from 'path'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
-import beautify from 'js-beautify'
 import config from '../config'
 const log = require('../lib/debug')('app:middlewares:react')
 
@@ -33,7 +32,7 @@ export default async(ctx, next) => {
 
       if (opts.beautify) {
         // NOTE: This will screw up some things where whitespace is important, and be subtly different than prod.
-        markup = beautify.html(markup)
+        // markup = beautify.html(markup)
       }
 
       ctx.type = 'html'
