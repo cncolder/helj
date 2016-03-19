@@ -80,7 +80,7 @@ var config = {
 };
 
 if (_env2.default.deploy) {
-  opts.session.cookie.maxAge = (0, _ms2.default)('1 hour');
+  config.session.cookie.maxAge = (0, _ms2.default)('1 hour');
 }
 
 exports.default = config;

@@ -60,7 +60,7 @@ var config = {
 }
 
 if (env.deploy) {
-  opts.session.cookie.maxAge = ms('1 hour')
+  config.session.cookie.maxAge = ms('1 hour')
 }
 
 

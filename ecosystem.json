@@ -1,5 +1,21 @@
 {
   "apps": [{
+    "name": "helj",
+    "script": "server",
+    "instances": "1",
+    "watch": false,
+    "ignore_watch": [
+      "[\\/\\\\]\\./",
+      ".babel",
+      ".git",
+      "client",
+      "node_modules",
+      "gulpfile",
+      "public",
+      "src",
+      "test",
+      "views"
+    ],
     "env": {
       "DEBUG": "app:*,koa:*,socket.io:*",
       "DEBUG_COLORS": 1,
@@ -35,23 +51,7 @@
       "WX_SECRET": "0cd05080045f5b77bf0f13d412b7a8c8",
       "WX_TOKEN": "wolongang",
       "WX_AESKEY": "E8pr1HjyNdYbvvSb6nBuHpwqalCaLXw2Okymk9ZiVHe"
-    },
-    "ignore_watch": [
-      "[\\/\\\\]\\./",
-      ".babel",
-      ".git",
-      "client",
-      "node_modules",
-      "gulpfile",
-      "public",
-      "src",
-      "test",
-      "views"
-    ],
-    "instances": "1",
-    "name": "helj",
-    "script": "server",
-    "watch": false
+    }
   }],
   "deploy": {
     "staging": {
