@@ -1,54 +1,58 @@
-/**
- * Current phase reducer
- */
-import {
-  handleActions,
-}
-from 'redux-actions'
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-export default handleActions({
-  ADD_TO_CART: (state, action) => {
-    let nextState = {
-      ...state,
-    }
-    if (!nextState.products) nextState.products = []
+var _extends2 = require('babel-runtime/helpers/extends');
 
-    let addedProduct = {
-      ...action.payload,
-    }
-    let existedProduct = nextState.products.find(product => product.id == addedProduct.id)
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _reduxActions = require('redux-actions');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = (0, _reduxActions.handleActions)({
+  ADD_TO_CART: function ADD_TO_CART(state, action) {
+    var nextState = (0, _extends3.default)({}, state);
+    if (!nextState.products) nextState.products = [];
+
+    var addedProduct = (0, _extends3.default)({}, action.payload);
+    var existedProduct = nextState.products.find(function (product) {
+      return product.id == addedProduct.id;
+    });
     if (existedProduct) {
-      existedProduct.amount += 1
+      existedProduct.amount += 1;
     } else {
-      addedProduct.amount = 1
-      nextState.products.push(addedProduct)
+      addedProduct.amount = 1;
+      nextState.products.push(addedProduct);
     }
 
-    return nextState
+    return nextState;
   },
 
-  REMOVE_FROM_CART: (state, action) => {
-    let nextState = {
-      ...state,
-    }
-    if (!nextState.products) return state
+  REMOVE_FROM_CART: function REMOVE_FROM_CART(state, action) {
+    var nextState = (0, _extends3.default)({}, state);
+    if (!nextState.products) return state;
 
-    let removedProduct = {
-      ...action.payload,
-    }
-    let existedProduct = nextState.products.find(product => product.id == removedProduct.id)
+    var removedProduct = (0, _extends3.default)({}, action.payload);
+    var existedProduct = nextState.products.find(function (product) {
+      return product.id == removedProduct.id;
+    });
     if (existedProduct) {
       if (existedProduct.amount > 1) {
-        existedProduct.amount -= 1
+        existedProduct.amount -= 1;
       } else {
-        nextState.products = nextState.products.filter(product => product.id !=
-          existedProduct.id)
+        nextState.products = nextState.products.filter(function (product) {
+          return product.id != existedProduct.id;
+        });
       }
     } else {
-      return state
+      return state;
     }
 
-    return nextState
-  },
-}, {})
+    return nextState;
+  }
+}, {}); /**
+         * Current phase reducer
+         */

@@ -1,0 +1,52 @@
+/**
+ * Store singleton
+ */
+
+import env from '../lib/env'
+import isPromise from '../lib/is-promise'
+import {
+  createStore, applyMiddleware, combineReducers
+}
+from 'redux'
+import promisePendingMiddleware from '../lib/redux-promise-pending'
+import promiseMiddleware from 'redux-promise'
+import logger from 'redux-logger'
+import {
+  routerReducer
+}
+from 'react-router-redux'
+import reducers from '../reducers'
+import initialState from './initial-state'
+import subscribeSocketIO from './subscribe-socket.io'
+const log = require('debug')('client:store:store')
+
+
+let middlewares = [promisePendingMiddleware, promiseMiddleware]
+
+if (env.local) {
+  middlewares.push(logger({
+    collapsed: true,
+    duration: true,
+    // Only output resolved promise result
+    predicate: (state, action) => !isPromise(action.payload) && !action.type.endsWith(
+      '_PENDING'),
+  }))
+
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('../reducers', () => {
+      const nextRootReducer = require('../reducers')
+      store.replaceReducer(nextRootReducer)
+    })
+  }
+}
+
+const reducer = combineReducers({
+  ...reducers,
+  routing: routerReducer,
+}, initialState)
+
+const store = applyMiddleware(...middlewares)(createStore)(reducer)
+
+
+export default store

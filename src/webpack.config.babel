@@ -2,56 +2,54 @@ import path from 'path'
 import autoprefixer from 'autoprefixer'
 import webpack from 'webpack'
 import pkg from './package.json'
-import env from './lib/env'
+import env from './server/lib/env'
 
 
 const version = pkg.version
 const join = p => path.join(__dirname, p)
-
-/**
- * https://github.com/glenjamin/webpack-hot-middleware#config
- *
- * path - The path which the middleware is serving the event stream on
- * timeout - The time to wait after a disconnection before attempting to reconnect
- * overlay - Set to false to disable the DOM-based client-side overlay.
- * reload - Set to true to auto-reload the page when webpack gets stuck.
- * noInfo - Set to true to disable informational console logging.
- * quiet - Set to true to disable all console logging.
- */
-const hotMiddleware = 'webpack-hot-middleware/client?reload=true&overlay=false'
+  /**
+   * https://github.com/glenjamin/webpack-hot-middleware#config
+   *
+   * path - The path which the middleware is serving the event stream on
+   * timeout - The time to wait after a disconnection before attempting to reconnect
+   * overlay - Set to false to disable the DOM-based client-side overlay.
+   * reload - Set to true to auto-reload the page when webpack gets stuck.
+   * noInfo - Set to true to disable informational console logging.
+   * quiet - Set to true to disable all console logging.
+   */
+const hot = 'webpack-hot-middleware/client?reload=true&overlay=false'
 
 export default {
   entry: {
-    client: env.deploy ? './client' : [hotMiddleware, './client'],
-    admin: env.deploy ? './client/admin' : [hotMiddleware, './client/admin'],
+    client: env.local ? [
+      hot,
+      'style!./src/styles/client.less',
+      './client',
+    ] : [
+      'file?name=css/[name].css!extract!./src/styles/client.less',
+      './client',
+    ],
+    // admin: env.local ? [
+    //   hot,
+    //   'style!./src/styles/admin.less',
+    //   './client/admin',
+    // ] : [
+    //   'file?name=css/[name].css!extract!./src/styles/admin.less',
+    //   './client/admin',
+    // ],
   },
   output: {
-    path: join('./public/js/'),
-    filename: '[name].js',
-    publicPath: '/js/',
+    path: join('./public/'),
+    filename: 'js/[name].js',
   },
-  devtool: env.deploy ? [] : 'inline-source-map',
-  resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx'],
-  },
+  devtool: env.local ? 'inline-source-map' : [],
   module: {
-    noParse: /socket\.io\-client/,
+    noParse: [
+      /socket\.io\-client/,
+    ],
     loaders: [{
-      test: /\.jsx?$/,
-      include: /client|lib/,
-      exclude: /node_modules/,
-      loader: 'babel',
-      query: {
-        presets: ['es2015', 'stage-0', 'react', ],
-        cacheDirectory: true,
-        plugins: ['transform-runtime'],
-      },
-    }, {
-      test: /\.css$/,
-      loader: 'style!css',
-    }, {
       test: /\.less$/,
-      loader: 'style!css!postcss-loader!less?noIeCompat',
+      loader: 'css!postcss!less?noIeCompat',
     }, {
       test: /\.woff(2)?/,
       loader: 'url',
@@ -66,21 +64,31 @@ export default {
         limit: 10 * 1000, // 10kb
         minetype: 'application/octet-stream',
       },
-    }, {
-      test: /\.(eot|svg)/,
-      loader: 'file',
-    }, ],
+    },],
   },
   postcss: () => [autoprefixer],
-  plugins: env.deploy ? [
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'js/vendor.js',
+    }),
+    new webpack.optimize.OccurrenceOrderPlugin(true),
+  ].concat(env.local ? [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development'),
+        VERSION: JSON.stringify(version),
+      },
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+  ] : [
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
         VERSION: JSON.stringify(version),
       },
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
       sourceMap: false,
@@ -88,16 +96,5 @@ export default {
         warnings: false,
       },
     }),
-  ] : [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-        VERSION: JSON.stringify(version),
-      },
-    }),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-  ]
+  ])
 }

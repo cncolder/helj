@@ -1,0 +1,8 @@
+import {
+  createAction
+}
+from 'redux-actions'
+import * as api from '../lib/api'
+
+
+export const getWhoami = createAction('GET_WHOAMI', api.getWhoami)

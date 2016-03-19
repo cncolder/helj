@@ -1,0 +1,17 @@
+import {
+  combineReducers
+}
+from 'redux'
+
+import pending from './pending'
+import shop from './shop'
+import cart from './cart'
+import me from './me'
+
+
+export default {
+  pending,
+  shop,
+  cart,
+  me,
+}

@@ -50,7 +50,7 @@
     ],
     "instances": "1",
     "name": "helj",
-    "script": ".",
+    "script": "server",
     "watch": false
   }],
   "deploy": {
