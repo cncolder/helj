@@ -67,7 +67,7 @@
       "path": "/var/www/helj",
       "post-deploy": "cnpm install --production --unsafe-perm --no-bin-links ; pm2 startOrRestart ecosystem.json --env production ; cnpm prune",
       "ref": "origin/master",
-      "repo": "/var/git/helj",
+      "repo": "git@github.com:cncolder/helj.git",
       "user": "root"
     }
   }
