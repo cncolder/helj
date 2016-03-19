@@ -49,17 +49,23 @@ var log = require('../lib/debug')('app:middlewares:wechat'); /**
 var WECHAT_MENU = {
   button: [{
     type: 'view',
-    name: '叫外卖',
-    url: _config2.default.rootUrl,
-    sub_button: []
-  }, {
-    type: 'view',
-    name: '退出',
-    url: _config2.default.rootUrl + '/auth/logout',
+    name: '电话外卖',
+    url: 'tel://85575557',
     sub_button: []
   }]
 };
 
+/*{
+    type: 'view',
+    name: '叫外卖',
+    url: config.rootUrl,
+    sub_button: [],
+  }, {
+    type: 'view',
+    name: '退出',
+    url: `${config.rootUrl}/auth/logout`,
+    sub_button: [],
+  },*/
 _wechatApi2.default.getMenuAsync().then(function (result) {
   if ((0, _isEqual2.default)(result.menu, WECHAT_MENU)) {
     log('newest menu %o', result.menu);

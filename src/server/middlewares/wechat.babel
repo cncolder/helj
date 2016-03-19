@@ -12,16 +12,23 @@ const log = require('../lib/debug')('app:middlewares:wechat')
 
 const WECHAT_MENU = {
   button: [{
-    type: 'view',
-    name: '叫外卖',
-    url: config.rootUrl,
-    sub_button: [],
-  }, {
-    type: 'view',
-    name: '退出',
-    url: `${config.rootUrl}/auth/logout`,
-    sub_button: [],
-  }, ],
+      type: 'view',
+      name: '电话外卖',
+      url: 'tel://85575557',
+      sub_button: [],
+    },
+    /*{
+        type: 'view',
+        name: '叫外卖',
+        url: config.rootUrl,
+        sub_button: [],
+      }, {
+        type: 'view',
+        name: '退出',
+        url: `${config.rootUrl}/auth/logout`,
+        sub_button: [],
+      },*/
+  ],
 }
 
 wechatApi.getMenuAsync()
@@ -135,7 +142,8 @@ class Router {
     const ctx = this.ctx
     const klass = this.constructor
 
-    ctx.body = `用心做好外卖
+    ctx.body =
+      `用心做好外卖
     微信点餐即将开放, 如需订餐请拨打电话 ${this.constructor.textLink(85575556, 'tel://85575557')}`
   }
 
