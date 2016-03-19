@@ -48,9 +48,9 @@ var log = require('../lib/debug')('app:middlewares:wechat'); /**
 
 var WECHAT_MENU = {
   button: [{
-    type: 'view',
     name: '电话外卖',
-    url: 'tel://85575556',
+    type: 'click',
+    key: 'telephone',
     sub_button: []
   }]
 };
@@ -276,10 +276,22 @@ var Router = function () {
     key: 'click',
     value: function () {
       var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee6() {
+        var ctx, msg, _msg$event2, name, key;
+
         return _regenerator2.default.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
+                ctx = this.ctx;
+                msg = ctx.msg;
+                _msg$event2 = msg.event;
+                name = _msg$event2.name;
+                key = _msg$event2.key;
+
+
+                if ('telephone' == key) this.intro();
+
+              case 6:
               case 'end':
                 return _context6.stop();
             }
